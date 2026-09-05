@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { Benefits } from './components/Benefits';
-import { Portfolio } from './components/Portfolio';
-import { Process } from './components/Process';
-import { ContactSection } from './components/ContactSection';
-import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ProjectModal } from './components/ProjectModal';
 import { Project } from './types';
 
-export default function App() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [targetProjectQuote, setTargetProjectQuote] = useState<string>('');
+// Independent Pages
+import { HomePage } from './pages/HomePage';
+import { BenefitsPage } from './pages/BenefitsPage';
+import { PortfolioPage } from './pages/PortfolioPage';
+import { ProcessPage } from './pages/ProcessPage';
+import { FAQPage } from './pages/FAQPage';
+import { ContactPage } from './pages/ContactPage';
 
-  const scrollToContact = (projectName?: string) => {
-    if (projectName) {
-      setTargetProjectQuote(projectName);
-    }
-    const contactElem = document.getElementById('contato');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+function MainApp() {
+  const { currentPage, navigate } = useNavigation();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const handleSelectProject = (project: Project) => {
     setSelectedProject(project);
@@ -34,7 +27,8 @@ export default function App() {
   };
 
   const handleRequestQuoteFromModal = (projectName: string) => {
-    scrollToContact(projectName);
+    setSelectedProject(null);
+    navigate('contato', projectName);
   };
 
   return (
@@ -47,37 +41,25 @@ export default function App() {
         <div className="absolute -bottom-40 right-10 w-[700px] h-[700px] bg-emerald-600/10 rounded-full blur-[160px]" />
       </div>
 
-      {/* 1. Header Navigation */}
-      <Header onOpenContact={() => scrollToContact()} />
+      {/* Global Header Navigation */}
+      <Header />
 
-      {/* Main Content Area */}
-      <main id="main-content" className="flex-1 relative z-10">
-        {/* 1. Hero Section */}
-        <Hero onCtaClick={() => scrollToContact()} />
-
-        {/* 2. Seção de Benefícios */}
-        <Benefits onCtaClick={() => scrollToContact()} />
-
-        {/* 3. Portfólio de Projetos */}
-        <Portfolio
-          onSelectProject={handleSelectProject}
-          onCtaClick={() => scrollToContact()}
-        />
-
-        {/* Processo de Trabalho / Como Funciona */}
-        <Process onCtaClick={() => scrollToContact()} />
-
-        {/* 4. Área de Contato & Orçamento */}
-        <ContactSection initialProjectType={targetProjectQuote} />
-
-        {/* Perguntas Frequentes */}
-        <FAQ />
+      {/* Main Content: Independent Page Router */}
+      <main id="main-content" className="flex-1 relative z-10 min-h-[75vh]">
+        {currentPage === 'inicio' && <HomePage />}
+        {currentPage === 'beneficios' && <BenefitsPage />}
+        {currentPage === 'portfolio' && (
+          <PortfolioPage onSelectProject={handleSelectProject} />
+        )}
+        {currentPage === 'como-funciona' && <ProcessPage />}
+        {currentPage === 'faq' && <FAQPage />}
+        {currentPage === 'contato' && <ContactPage />}
       </main>
 
-      {/* 6. Footer com Otimização Semântica & SEO */}
+      {/* Global Footer with Multi-Page Navigation */}
       <Footer />
 
-      {/* 5. Botão Flutuante do WhatsApp */}
+      {/* Global Floating WhatsApp Contact */}
       <FloatingWhatsApp />
 
       {/* Interactive Project Preview Modal */}
@@ -89,5 +71,13 @@ export default function App() {
         />
       )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationProvider>
+      <MainApp />
+    </NavigationProvider>
   );
 }

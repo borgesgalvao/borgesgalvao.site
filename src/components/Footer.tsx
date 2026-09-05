@@ -1,8 +1,10 @@
 import React from 'react';
 import { Globe, MessageCircle, Mail, MapPin, Heart, Shield, CheckCircle } from 'lucide-react';
+import { useNavigation, PageRoute } from '../context/NavigationContext';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { navigate } = useNavigation();
 
   const seoKeywords = [
     'criação de sites para pequenas empresas',
@@ -13,6 +15,11 @@ export const Footer: React.FC = () => {
     'criar site profissional',
     'agência de criação de sites',
   ];
+
+  const handleNav = (e: React.MouseEvent, route: PageRoute) => {
+    e.preventDefault();
+    navigate(route);
+  };
 
   return (
     <footer id="main-footer" className="bg-slate-950/90 text-slate-300 border-t border-white/10 text-xs sm:text-sm backdrop-blur-xl relative overflow-hidden">
@@ -25,7 +32,11 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Brand & Bio (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <a href="#" className="flex items-center gap-2.5 group inline-block">
+            <a
+              href="/"
+              onClick={(e) => handleNav(e, 'inicio')}
+              className="flex items-center gap-2.5 group inline-block"
+            >
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
                 <Globe className="w-5 h-5 text-white" />
               </div>
@@ -51,32 +62,56 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#hero-section" className="text-slate-400 hover:text-emerald-400 transition-colors">
+                <a
+                  href="/"
+                  onClick={(e) => handleNav(e, 'inicio')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors"
+                >
                   Início
                 </a>
               </li>
               <li>
-                <a href="#beneficios" className="text-slate-400 hover:text-emerald-400 transition-colors">
-                  Por que ter um Site?
+                <a
+                  href="/beneficios"
+                  onClick={(e) => handleNav(e, 'beneficios')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors"
+                >
+                  Benefícios
                 </a>
               </li>
               <li>
-                <a href="#portfolio" className="text-slate-400 hover:text-emerald-400 transition-colors">
-                  Exemplos de Projetos
+                <a
+                  href="/portfolio"
+                  onClick={(e) => handleNav(e, 'portfolio')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors"
+                >
+                  Portfólio de Projetos
                 </a>
               </li>
               <li>
-                <a href="#como-funciona" className="text-slate-400 hover:text-emerald-400 transition-colors">
-                  Como Funciona
+                <a
+                  href="/como-funciona"
+                  onClick={(e) => handleNav(e, 'como-funciona')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors"
+                >
+                  Como Funciona (7 Dias)
                 </a>
               </li>
               <li>
-                <a href="#faq" className="text-slate-400 hover:text-emerald-400 transition-colors">
+                <a
+                  href="/faq"
+                  onClick={(e) => handleNav(e, 'faq')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors"
+                >
                   Perguntas Frequentes
                 </a>
               </li>
               <li>
-                <a href="#contato" className="text-slate-400 hover:text-emerald-400 transition-colors">
+                <a
+                  href="/contato"
+                  onClick={(e) => handleNav(e, 'contato')}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors font-semibold"
+                >
                   Solicitar Orçamento
                 </a>
               </li>
@@ -152,9 +187,9 @@ export const Footer: React.FC = () => {
             © {currentYear} <strong>borgesgalvao.site</strong> — Todos os direitos reservados.
           </div>
           <div className="flex items-center gap-4">
-            <span className="hover:text-slate-300">Termos de Serviço</span>
+            <span className="hover:text-slate-300 cursor-pointer">Termos de Serviço</span>
             <span>•</span>
-            <span className="hover:text-slate-300">Política de Privacidade</span>
+            <span className="hover:text-slate-300 cursor-pointer">Política de Privacidade</span>
           </div>
         </div>
       </div>

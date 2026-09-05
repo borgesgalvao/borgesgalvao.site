@@ -1,6 +1,6 @@
 {
   "name": "borgesgalvao.site",
-  "description": "Landing page de alta conversão para agência de desenvolvimento de sites focada em micro e pequenas empresas prestadoras de serviço.",
+  "description": "Site multi-páginas de alta conversão para agência de desenvolvimento web focada em micro e pequenas empresas prestadoras de serviço.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

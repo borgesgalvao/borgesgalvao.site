@@ -1,11 +1,13 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2, Zap, Shield, Sparkles, Star, TrendingUp, Smartphone, MousePointerClick } from 'lucide-react';
+import { useNavigation } from '../context/NavigationContext';
 
 interface HeroProps {
   onCtaClick: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
+  const { navigate } = useNavigation();
   return (
     <section
       id="hero-section"
@@ -81,14 +83,15 @@ export const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
                 <ArrowRight className="w-5 h-5" />
               </button>
 
-              <a
+              <button
                 id="hero-view-portfolio-btn"
-                href="#portfolio"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-sm font-semibold text-slate-200 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 backdrop-blur-md rounded-xl transition-all"
+                type="button"
+                onClick={() => navigate('portfolio')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-sm font-semibold text-slate-200 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 backdrop-blur-md rounded-xl transition-all cursor-pointer"
               >
                 <MousePointerClick className="w-4 h-4 text-slate-400" />
                 <span>Ver projetos reais</span>
-              </a>
+              </button>
             </div>
 
             {/* Social Trust Metrics */}
