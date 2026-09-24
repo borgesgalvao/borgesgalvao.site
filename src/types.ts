@@ -1,7 +1,7 @@
 export interface Project {
   id: string;
   title: string;
-  category: 'clinica' | 'oficina' | 'saude' | 'arquitetura' | 'academia' | 'geral';
+  category: 'clinica' | 'oficina' | 'saude' | 'arquitetura' | 'academia' | 'estetica' | 'geral';
   categoryLabel: string;
   clientType: string;
   description: string;
@@ -9,6 +9,7 @@ export interface Project {
   imageUrl: string;
   desktopPreviewUrl: string;
   liveUrlMock: string;
+  externalUrl?: string;
   features: string[];
   results: string;
   colorScheme: string;

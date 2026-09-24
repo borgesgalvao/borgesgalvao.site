@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Project } from '../types';
-import { X, Check, Smartphone, Monitor, ArrowRight, MessageCircle, Star } from 'lucide-react';
+import { X, Check, Smartphone, Monitor, ArrowRight, ArrowUpRight, MessageCircle, Star } from 'lucide-react';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -57,7 +57,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               <div className="flex items-center gap-2 text-xs text-slate-400">
                 <span className="font-semibold text-slate-200">{project.clientType}</span>
                 <span>•</span>
-                <span className="text-emerald-400 font-mono text-[11px]">{project.liveUrlMock}</span>
+                {project.externalUrl ? (
+                  <a
+                    href={project.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-400 hover:text-emerald-300 hover:underline font-mono text-[11px] inline-flex items-center gap-1 font-bold"
+                  >
+                    <span>{project.liveUrlMock}</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                ) : (
+                  <span className="text-emerald-400 font-mono text-[11px]">{project.liveUrlMock}</span>
+                )}
               </div>
 
               {/* View Switcher */}
@@ -94,7 +106,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                   <img
                     src={project.desktopPreviewUrl || project.imageUrl}
                     alt={project.title}
-                    className="w-full h-64 sm:h-80 object-cover object-top"
+                    className="w-full h-64 sm:h-80 object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-4">
                     <span className="text-xs font-medium text-slate-300">
@@ -181,24 +193,38 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
         {/* Modal Footer CTAs */}
         <div className="px-5 py-4 border-t border-white/10 bg-slate-950/80 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3">
-          <a
-            href={`https://wa.me/5531992141182?text=Ol%C3%A1!%20Gostei%20do%20projeto%20${encodeURIComponent(project.title)}%20e%20gostaria%20de%20um%20or%C3%A7amento%20similar.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-emerald-400 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 rounded-xl transition-all"
-          >
-            <MessageCircle className="w-4 h-4 text-emerald-400" />
-            <span>Falar no WhatsApp sobre este modelo</span>
-          </a>
+          <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+            {project.externalUrl && (
+              <a
+                href={project.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md"
+              >
+                <span>Visitar Site no Ar</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+            )}
+
+            <a
+              href={`https://wa.me/5531992141182?text=Ol%C3%A1!%20Gostei%20do%20projeto%20${encodeURIComponent(project.title)}%20e%20gostaria%20de%20um%20or%C3%A7amento%20similar.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-emerald-400 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 rounded-xl transition-all"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <span>Falar no WhatsApp sobre este modelo</span>
+            </a>
+          </div>
 
           <button
             onClick={() => {
               onClose();
               onRequestQuote(project.title);
             }}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl shadow-lg shadow-emerald-500/25 transition-all cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs font-bold text-slate-950 bg-white hover:bg-slate-200 rounded-xl shadow-lg transition-all cursor-pointer"
           >
-            <span>Quero um site profissional como este</span>
+            <span>Quero um site como este</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

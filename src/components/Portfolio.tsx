@@ -13,9 +13,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject, onCtaClic
 
   const filterOptions = [
     { id: 'todos', label: 'Todos os Projetos' },
-    { id: 'clinica', label: 'Clínicas Odontológicas' },
-    { id: 'oficina', label: 'Oficinas Mecânicas' },
-    { id: 'saude', label: 'Psicologia & Nutrição' },
+    { id: 'saude', label: 'Saúde & Nutrição' },
+    { id: 'estetica', label: 'Beleza & Estética' },
     { id: 'arquitetura', label: 'Arquitetura & Engenharia' },
     { id: 'academia', label: 'Academias & Studios' },
   ];
@@ -91,13 +90,24 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject, onCtaClic
                 </div>
 
                 {/* Hover Quick Action Overlay */}
-                <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 gap-2.5">
+                  {project.externalUrl ? (
+                    <a
+                      href={project.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg hover:bg-emerald-300 transition-colors cursor-pointer"
+                    >
+                      <ArrowUpRight className="w-4 h-4" />
+                      <span>Visitar Site</span>
+                    </a>
+                  ) : null}
                   <button
                     onClick={() => onSelectProject(project)}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg hover:bg-emerald-300 transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold rounded-xl shadow-lg transition-colors cursor-pointer backdrop-blur-sm"
                   >
                     <Eye className="w-4 h-4" />
-                    <span>Ver Projeto Completo</span>
+                    <span>Detalhes</span>
                   </button>
                 </div>
               </div>
@@ -130,14 +140,27 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject, onCtaClic
 
                 {/* Action CTA Button on Card */}
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                  <button
-                    id={`btn-view-project-${project.id}`}
-                    onClick={() => onSelectProject(project)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group-hover:underline cursor-pointer"
-                  >
-                    <span>Ver Projeto</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </button>
+                  {project.externalUrl ? (
+                    <a
+                      id={`btn-view-project-${project.id}`}
+                      href={project.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group-hover:underline cursor-pointer"
+                    >
+                      <span>Ver Projeto</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <button
+                      id={`btn-view-project-${project.id}`}
+                      onClick={() => onSelectProject(project)}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group-hover:underline cursor-pointer"
+                    >
+                      <span>Ver Projeto</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </button>
+                  )}
 
                   <span className="text-[11px] text-slate-400 font-medium">
                     100% Responsivo

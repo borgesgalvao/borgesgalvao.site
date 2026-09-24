@@ -33,7 +33,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onSelectProject })
         </h1>
 
         <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-          Explore nossos projetos feitos sob medida para clínicas médicas e odontológicas, oficinas mecânicas, consultórios de psicologia, nutricionistas, escritórios de arquitetura e prestadores de serviço.
+          Explore nossos projetos feitos sob medida para salões de beleza e nail designers, consultórios de nutrição e psicologia, clínicas, escritórios de arquitetura e prestadores de serviço.
         </p>
 
         {/* Feature Badges */}
